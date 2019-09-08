@@ -1,0 +1,27 @@
+global:
+  # The smarthost and SMTP sender used for mail notifications.
+  smtp_smarthost: 'mailhog:1025'
+  smtp_from: 'alertmanager@example.org'
+  smtp_require_tls: false
+
+templates:
+  - '/etc/alertmanager/*.tmpl'
+# The root route on which each incoming alert enters.
+route:
+  # default route if none match
+  receiver: alert-emailer
+
+  # The labels by which incoming alerts are grouped together. For example,
+  # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
+  # be batched into a single group.
+  # TODO:
+  group_by: ['alertname', 'priority']
+
+  # All the above attributes are inherited by all child routes and can
+  # overwritten on each.
+
+receivers:
+  - name: alert-emailer
+    email_configs:
+      - to: 'receiver@example.com'
+        send_resolved: true

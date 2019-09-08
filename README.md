@@ -11,3 +11,5 @@ Prometheus http://localhost:9090/
 Grafana http://localhost:3000/ admin/admin
 
 JVM (Micrometer) dashboard - grafana.json
+
+AlertManager http://localhost:9093 sends email alerts to local mail server, email can be viewed in MailHog http://localhost:8025/

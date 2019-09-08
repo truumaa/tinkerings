@@ -3,6 +3,7 @@ classes
 /.idea
 *.iml
 *.log
+/data
 
 out/
 logs

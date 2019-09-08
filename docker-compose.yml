@@ -1,12 +1,46 @@
 version: "3.7"
+networks:
+  promnet:
+    driver: bridge
+
 services:
   prom:
     image: prom/prometheus
     volumes:
       - ./conf/:/conf
-    command: "--config.file=/conf/prometheus.yml --storage.tsdb.path=/prometheus"
+      - ./data/prometheus:/data
+    command:
+      - '--config.file=/conf/prometheus.yml'
+      - '--storage.tsdb.path=/data'
     ports:
       - 9090:9090
+    depends_on:
+      - alertmanager
+    networks:
+      - promnet
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./conf/:/conf
+      - ./data/alertmanager:/data
+    command:
+      - '--config.file=/conf/alertmanager.yml'
+      - '--storage.path=/data'
+    ports:
+      - 9093:9093
+    networks:
+      - promnet
+    depends_on:
+      - mailhog
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+    networks:
+      - promnet
+
   grafana:
     image: grafana/grafana
     ports:
