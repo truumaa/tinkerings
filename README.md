@@ -1,7 +1,7 @@
-SpringBoot + Prometheus + Grafana
+SpringBoot + Prometheus + Grafana + Kafka
 
 To test:
-1. First add your IP to conf/prometheus.yml 'HOST_IP'. "ipconfig getifaddr en0"
+1. First add your IP to conf/prometheus.yml and docker-compose.yml 'HOST_IP'. "ipconfig getifaddr en0"
 2. docker-compose up
 3. Run SandboxApplication
 4. Test it out "curl http://localhost:8080/test?name=john"
