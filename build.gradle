@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.0.BUILD-SNAPSHOT'
+	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 	id 'idea'
@@ -7,26 +7,45 @@ plugins {
 
 group = 'ee.learning'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '8'
 
-repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
-}
+allprojects{
+	sourceCompatibility = 1.8
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	repositories {
+		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
+		maven { url 'https://repo.spring.io/snapshot' }
 	}
-
-	compile "org.springframework.boot:spring-boot-starter-web"
-	compile "org.springframework.boot:spring-boot-starter-actuator"
-	compile 'io.micrometer:micrometer-registry-prometheus'
-	compile 'org.springframework.kafka:spring-kafka'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+subprojects{
+	apply plugin: "java"
+	apply plugin: "idea"
+	apply plugin: "org.springframework.boot"
+	apply plugin: "io.spring.dependency-management"
+
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter'
+		testImplementation('org.springframework.boot:spring-boot-starter-test') {
+			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		}
+
+		compile "org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE"
+		compile "org.springframework.boot:spring-boot-starter-actuator:2.1.8.RELEASE"
+		compile 'io.micrometer:micrometer-registry-prometheus'
+		compile 'org.springframework.kafka:spring-kafka'
+		compile ('org.springframework.cloud:spring-cloud-starter-zookeeper-discovery:2.1.3.RELEASE'){
+			exclude group: 'org.springframework.boot', module: 'spring-boot-starter-actuator'
+			exclude group: 'org.apache.curator', module: 'curator-recipes'
+			exclude group: 'org.apache.zookeeper', module: 'zookeeper'
+		}
+		compile 'org.springframework.cloud:spring-cloud-starter-feign:2.0.0.M2'
+		compile 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE'
+		compile 'org.apache.curator:curator-recipes:4.2.0'
+		compile 'org.apache.zookeeper:zookeeper:3.4.14'
+	}
 }

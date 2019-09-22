@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: SandboxApplication
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+kafka:
+  bootstrapAddress: localhost:9092
+  topic:
+    pong: pong

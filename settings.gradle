@@ -12,4 +12,6 @@ pluginManagement {
 		}
 	}
 }
-rootProject.name = 'sandbox'
+rootProject.name = 'tinkerings'
+include 'responder'
+include 'sandbox'

@@ -1,10 +1,11 @@
-SpringBoot + Prometheus + Grafana + Kafka
+SpringBoot + Prometheus + Grafana + Kafka + Zookeeper + Feign
 
 To test:
-1. First add your IP to conf/prometheus.yml and docker-compose.yml 'HOST_IP'. "ipconfig getifaddr en0"
+1. First add your IP to _conf/prometheus.yml_ and _docker-compose.yml_ **'HOST_IP'**. "ipconfig getifaddr en0"
 2. docker-compose up
-3. Run SandboxApplication
-4. Test it out "curl http://localhost:8080/test?name=john"
+3. Run SandboxApplication and ResponderApplication
+4. Test out kafka: "curl http://localhost:8080/test/kafka?name=john"
+5. Test out Zookeeper + Feign: "curl http://localhost:8080/test/echo?name=john"
 
 Prometheus http://localhost:9090/
 
